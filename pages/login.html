@@ -13,12 +13,23 @@
     <a href="post.html">Post</a> |
     <a href="profile.html">Profile</a>
   </nav>
-
-  <main>
-    <h1>Login Page</h1>
-    <p>Content will be loaded here with JavaScript.</p>
-  </main>
-
+<main>
+  <h1>Login</h1>
+  <form id="loginForm">
+    <label>
+      Email:
+      <input type="email" name="email" required />
+    </label>
+    <br />
+    <label>
+      Password:
+      <input type="password" name="password" required />
+    </label>
+    <br />
+    <button type="submit">Login</button>
+  </form>
+  <div id="message"></div>
+</main>
   <script type="module" src="../js/ui/login.js"></script>
 </body>
 </html>
