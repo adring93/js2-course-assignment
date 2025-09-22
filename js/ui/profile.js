@@ -1,6 +1,8 @@
 import { SOCIAL_URL } from '../api/config.js';
 import { http } from '../api/http.js';
 import { getName, getToken } from '../utils/storage.js';
+import { requireAuth } from '../utils/guard.js';
+requireAuth();
 
 document.addEventListener('DOMContentLoaded', async () => {
   const main = document.querySelector('main');

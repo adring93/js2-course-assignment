@@ -1,6 +1,8 @@
 import { SOCIAL_URL } from '../api/config.js';
 import { http } from '../api/http.js';
 import { getToken } from '../utils/storage.js';
+import { requireAuth } from '../utils/guard.js';
+requireAuth();
 
 function getQueryParam(name) {
   return new URLSearchParams(window.location.search).get(name);
