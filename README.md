@@ -1,19 +1,26 @@
 # JavaScript 2 Course Assignment
 
-## Setup
-1. Clone this repo
-2. Run `npm install`
-3. Run `npm run dev`
+## Live Demo
+- [Netlify Link](https://your-netlify-link.netlify.app) ← replace with your own deploy
 
 ## Pages
-- Login
-- Register
-- Feed
-- Single Post
-- Profile
+- `/pages/login.html` – login
+- `/pages/register.html` – register
+- `/pages/feed.html` – feed with search + create post
+- `/pages/post.html?id=…` – single post (view, edit/delete if owner)
+- `/pages/profile.html?name=…` – profile page with posts, avatar, banner, follow/unfollow
+- `/pages/saved.html` – locally saved posts
 
-## Deployment
-- Link: (to be added after Netlify/Vercel deploy)
+## Features
+- Register, login, logout
+- Create, read, update, delete posts
+- Add images by URL
+- Search posts
+- Profile view with avatar & banner update
+- Follow / unfollow other users
+- Save posts locally
+- Responsive layout (CSS grid)
+- JSDoc comments in key files (`http.js`, `post.js`, `auth.js`)
 
 ## Notes
-This project is built with Vite and ES6 modules, using the Noroff Social API.
+Built with **Vite**, ES6 modules, and the **Noroff Social API v2**.
