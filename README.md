@@ -1,26 +1,36 @@
 # JavaScript 2 Course Assignment
 
+Frontend client for a social media app using the Noroff Social API v2.  
+Built with Vite, ES modules, and basic CSS.
+
 ## Live Demo
-- [Netlify Link](https://your-netlify-link.netlify.app) ← replace with your own deploy
+[Netlify Link](https://your-netlify-link.netlify.app)
 
 ## Pages
-- `/pages/login.html` – login
-- `/pages/register.html` – register
-- `/pages/feed.html` – feed with search + create post
-- `/pages/post.html?id=…` – single post (view, edit/delete if owner)
-- `/pages/profile.html?name=…` – profile page with posts, avatar, banner, follow/unfollow
-- `/pages/saved.html` – locally saved posts
+- `/pages/login.html` – Login
+- `/pages/register.html` – Register
+- `/pages/feed.html` – Feed (all posts + search + create)
+- `/pages/post.html?id=…` – Single post (view/edit/delete)
+- `/pages/profile.html` – My profile
 
 ## Features
-- Register, login, logout
+- Register / Login / Logout
 - Create, read, update, delete posts
-- Add images by URL
 - Search posts
-- Profile view with avatar & banner update
-- Follow / unfollow other users
-- Save posts locally
-- Responsive layout (CSS grid)
-- JSDoc comments in key files (`http.js`, `post.js`, `auth.js`)
+- Profile view with posts & follow/unfollow
+- Persistent auth with localStorage
 
-## Notes
-Built with **Vite**, ES6 modules, and the **Noroff Social API v2**.
+## Requirements Met
+- ES6 modules
+- JSDoc on 3+ functions
+- Deployed to Netlify
+- Basic styling
+- Public GitHub repo
+
+## Run Locally
+```bash
+git clone https://github.com/adring93/js2-course-assignment.git
+cd js2-course-assignment
+npm install
+npm run dev
+# open http://localhost:5173/pages/login.html
