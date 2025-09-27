@@ -12,6 +12,7 @@ Built with Vite, ES modules, and basic CSS.
 - `/pages/feed.html` – Feed (all posts + search + create)
 - `/pages/post.html?id=…` – Single post (view/edit/delete)
 - `/pages/profile.html` – My profile
+- `/pages/saved.html` – Locally saved posts
 
 ## Features
 - Register / Login / Logout
@@ -19,6 +20,7 @@ Built with Vite, ES modules, and basic CSS.
 - Search posts
 - Profile view with posts & follow/unfollow
 - Persistent auth with localStorage
+- Saved posts (bonus feature)
 
 ## Requirements Met
 - ES6 modules
@@ -26,6 +28,15 @@ Built with Vite, ES modules, and basic CSS.
 - Deployed to Netlify
 - Basic styling
 - Public GitHub repo
+
+## Learning & Resources
+This project was completed as part of my second-year JavaScript course at Noroff.  
+Along the way, I made use of:
+- A few YouTube tutorials (to refresh my memory on fetch and modular code structure).
+- AI tools (to help me debug, restructure, and explain code in smaller steps, also used ai to turn my readme page into a more readable page).
+- Occasional feedback from my girlfriend, who is a professional developer, especially on code readability and CSS structure.
+
+These outside perspectives helped me understand the material better and apply it more confidently in my own code.
 
 ## Run Locally
 ```bash
