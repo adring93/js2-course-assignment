@@ -1,36 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <link rel="stylesheet" href="style.css">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login</title>
+  <link rel="stylesheet" href="../assets/app.css" />
 </head>
 <body>
-  <nav>
-    <a href="login.html">Login</a> |
-    <a href="register.html">Register</a> |
-    <a href="feed.html">Feed</a> |
-    <a href="post.html">Post</a> |
-    <a href="profile.html">Profile</a>
-  </nav>
-<main>
-  <h1>Login</h1>
-  <form id="loginForm">
-    <label>
-      Email:
-      <input type="email" name="email" required />
-    </label>
-    <br />
-    <label>
-      Password:
-      <input type="password" name="password" required />
-    </label>
-    <br />
-    <button type="submit">Login</button>
-  </form>
-  <div id="message"></div>
-</main>
+ <nav>
+   <a href="feed.html" data-auth="in">Feed</a>
+  <a href="profile.html" data-auth="in">Profile</a>
+  <a href="saved.html" data-auth="in">Saved</a>
+  <a href="login.html" data-auth="out">Login</a>
+  <a href="register.html" data-auth="out">Register</a>
+  <button id="logout" data-auth="in">Logout</button>
+</nav>
+  <main>
+    <h1>Login</h1>
+    <form id="loginForm">
+      <input name="email" type="email" placeholder="Email" required />
+      <input name="password" type="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <p id="message"></p>
+  </main>
   <script type="module" src="../js/ui/login.js"></script>
 </body>
 </html>

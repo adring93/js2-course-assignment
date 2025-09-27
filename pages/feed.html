@@ -4,18 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Feed</title>
+  <link rel="stylesheet" href="../assets/app.css" />
 </head>
 <body>
-  <nav>
-    <a href="login.html">Login</a> |
-    <a href="register.html">Register</a> |
-    <a href="feed.html">Feed</a> |
-    <a href="post.html">Post</a> |
-    <a href="profile.html">Profile</a>
-  </nav>
+ <nav>
+  <a href="feed.html" data-auth="in">Feed</a>
+  <a href="profile.html" data-auth="in">Profile</a>
+  <a href="saved.html" data-auth="in">Saved</a>
+  <a href="login.html" data-auth="out">Login</a>
+  <a href="register.html" data-auth="out">Register</a>
+  <button id="logout" data-auth="in">Logout</button>
+</nav>
   <main>
     <h1>Feed Page</h1>
-    <p>Posts will be loaded here with JavaScript.</p>
+    <input id="search" placeholder="Search posts..." />
+ <section>
+  <h2>Create a new post</h2>
+  <form id="create-post">
+    <input name="title" placeholder="Title" required />
+    <textarea name="body" placeholder="Body"></textarea>
+    <input name="mediaUrl" placeholder="Image URL (optional)" />
+    <input name="mediaAlt" placeholder="Image alt (optional)" />
+    <button type="submit">Create</button>
+  </form>
+</section>
+    <p id="msg"></p>
+    <ul id="post-list"></ul>
   </main>
   <script type="module" src="../js/ui/feed.js"></script>
 </body>

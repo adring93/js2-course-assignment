@@ -1,39 +1,83 @@
-import { SOCIAL_URL } from '../api/config.js';
-import { http } from '../api/http.js';
-import { getName, getToken } from '../utils/storage.js';
-import { requireAuth } from '../utils/guard.js';
-requireAuth();
+import { requireAuth } from '../utils/guard.js'
+import { getProfileName } from '../utils/storage.js'
+import { getProfile, listUserPosts, followProfile, unfollowProfile, updateAvatar } from '../api/profile.js'
+import { setupNav } from './setupNav.js'
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const main = document.querySelector('main');
-  main.innerHTML = '<h2>Loading profile...</h2>';
+requireAuth()
+setupNav()
 
+const info = document.querySelector('#profile-info')
+const list = document.querySelector('#profile-posts')
+const msg = document.querySelector('#msg')
+const avatarForm = document.querySelector('#avatar-form')
+
+const paramName = new URLSearchParams(location.search).get('name')
+const myName = getProfileName()
+const name = paramName || myName
+if (!name) location.href = 'login.html'
+
+render()
+
+async function render() {
+  msg.textContent = 'Loading...'
   try {
-    const name = getName();
-    const token = getToken();
+    const [pRes, postsRes] = await Promise.all([getProfile(name), listUserPosts(name)])
+    const p = pRes.data
+    const posts = Array.isArray(postsRes?.data) ? postsRes.data : []
+    const isMe = name === myName
+    const iFollow = !isMe && !!p.followers?.find(f => f.name === myName)
 
-    if (!name || !token) {
-      main.innerHTML = '<h2>You must be logged in to view your profile.</h2>';
-      return;
+    info.innerHTML = `
+      <h2>${p.name}</h2>
+      ${p.avatar?.url ? `<img src="${p.avatar.url}" alt="${escapeHtml(p.avatar.alt || p.name)}" width="120" />` : ''}
+      <p>Followers: ${p._count?.followers ?? 0} • Following: ${p._count?.following ?? 0}</p>
+      ${p.bio ? `<p>${escapeHtml(p.bio)}</p>` : ''}
+      ${isMe ? '' : `<div style="margin-top:.6rem"><button id="follow">${iFollow ? 'Unfollow' : 'Follow'}</button></div>`}
+    `
+
+    avatarForm.style.display = isMe ? '' : 'none'
+
+    list.innerHTML = posts.length
+      ? posts.map(postItem).join('')
+      : '<li>No posts yet</li>'
+
+    if (!isMe) {
+      document.querySelector('#follow')?.addEventListener('click', async (ev) => {
+        const btn = ev.currentTarget
+        try {
+          if (btn.textContent === 'Follow') { await followProfile(p.name); btn.textContent = 'Unfollow' }
+          else { await unfollowProfile(p.name); btn.textContent = 'Follow' }
+        } catch (e) { msg.textContent = e.message }
+      })
     }
 
-    const profile = await http(`${SOCIAL_URL}/profiles/${name}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    msg.textContent = ''
+  } catch (e) { msg.textContent = e.message }
+}
 
-    console.log(profile);
-
-    main.innerHTML = `
-      <section>
-        <h1>${profile.name}</h1>
-        <p>Email: ${profile.email}</p>
-        <p>Posts: ${profile._count?.posts ?? 0}</p>
-        <p>Followers: ${profile._count?.followers ?? 0}</p>
-        <p>Following: ${profile._count?.following ?? 0}</p>
-      </section>
-    `;
-  } catch (error) {
-    console.error(error);
-    main.innerHTML = '<h2>Failed to load profile</h2>';
+avatarForm.addEventListener('submit', async (e) => {
+  e.preventDefault()
+  const fd = new FormData(avatarForm)
+  const url = fd.get('avatarUrl')?.trim()
+  if (!url) return
+  try {
+    await updateAvatar(myName, url)
+    msg.textContent = '✅ Avatar updated'
+    render()
+  } catch (e) {
+    msg.textContent = e.message
   }
-});
+})
+
+function postItem(p) {
+  return `
+    <li class="post-card">
+      <h3><a href="post.html?id=${p.id}">${escapeHtml(p.title || 'Untitled')}</a></h3>
+      <small>${new Date(p.created).toLocaleString()}</small>
+    </li>
+  `
+}
+
+function escapeHtml(s){
+  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))
+}

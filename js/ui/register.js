@@ -1,27 +1,29 @@
-import { registerUser } from '../api/auth.js';
+import { registerUser } from '../api/auth.js'
+import { setupNav } from './setupNav.js'
+setupNav()
 
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.querySelector('#registerForm');
-  const message = document.querySelector('#message');
+  const form = document.querySelector('#register-form')
+  const message = document.querySelector('#message')
 
   form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    message.textContent = 'Registering...'
 
-    const formData = new FormData(form);
+    const formData = new FormData(form)
     const newUser = {
       name: formData.get('name'),
       email: formData.get('email'),
       password: formData.get('password'),
-    };
+    }
 
     try {
-      const result = await registerUser(newUser);
-      message.textContent = `✅ Registered as ${result.name}`;
-      // My plan is for this to: Redirect straight to login - test it properly
-      window.location.href = 'login.html';
+      const result = await registerUser(newUser)
+      const name = result?.data?.name || 'user'
+      message.textContent = `✅ Registered as ${name}`
+      window.location.href = 'login.html'
     } catch (error) {
-      console.error(error);
-      message.textContent = `❌ Registration failed: ${error.data?.errors?.[0]?.message || error}`;
+      message.textContent = error.message || 'Registration failed'
     }
-  });
-});
+  })
+})

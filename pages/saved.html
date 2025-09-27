@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile</title>
+  <title>Saved</title>
   <link rel="stylesheet" href="../assets/app.css" />
 </head>
-<body>
+<body class="saved-page">
   <nav>
     <a href="feed.html" data-auth="in">Feed</a>
     <a href="profile.html" data-auth="in">Profile</a>
@@ -16,19 +16,14 @@
     <button id="logout" data-auth="in">Logout</button>
   </nav>
   <main>
-    <h1>Profile</h1>
-
-    <section id="profile-info"></section>
-
-    <form id="avatar-form" class="container" style="margin:.8rem 0;display:grid;gap:.5rem">
-      <input name="avatarUrl" placeholder="Profile image URL" />
-      <button type="submit">Update Avatar</button>
-    </form>
-
-    <h2>Posts</h2>
-    <ul id="profile-posts"></ul>
+    <h1>Saved Posts</h1>
+    <div style="display:flex;gap:.5rem;align-items:center;margin:.5rem 0">
+      <span id="count" aria-live="polite"></span>
+      <button id="clear" class="btn btn-danger" style="margin-left:auto">Clear all</button>
+    </div>
     <p id="msg"></p>
+    <ul id="saved-list"></ul>
   </main>
-  <script type="module" src="../js/ui/profile.js"></script>
+  <script type="module" src="../js/ui/saved.js"></script>
 </body>
 </html>
