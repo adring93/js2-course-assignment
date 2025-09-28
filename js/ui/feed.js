@@ -15,29 +15,35 @@ const me = getProfileName()
 async function renderPosts(query = '') {
   msg.textContent = 'Loading...'
   try {
-    const res = await listPosts('') 
+    const res = await listPosts('')
     const posts = res.data || []
     const q = (query || '').toLowerCase()
+
     const filtered = q
-      ? posts.filter(p =>
-          (p.title || '').toLowerCase().includes(q) ||
-          (p.body || '').toLowerCase().includes(q) ||
-          (p.author?.name || '').toLowerCase().includes(q)
+      ? posts.filter(({ title, body, author }) =>
+          (title || '').toLowerCase().includes(q) ||
+          (body || '').toLowerCase().includes(q) ||
+          ((author?.name) || '').toLowerCase().includes(q)
         )
       : posts
 
     postList.innerHTML = filtered.length
-      ? filtered.map(p => `
-        <li class="post-card">
-          <h3><a href="post.html?id=${p.id}">${escapeHtml(p.title || 'Untitled')}</a></h3>
-          ${imageTag(p.media)}
-          ${p.body ? `<p>${escapeHtml(p.body)}</p>` : ''}
-          <div style="display:flex;gap:.5rem;align-items:center;margin-top:.4rem">
-            <small>by <a href="profile.html?name=${encodeURIComponent(p.author?.name || '')}">${p.author?.name || 'unknown'}</a> • ${new Date(p.created).toLocaleString()}</small>
-            ${p.author?.name?.toLowerCase() === (me||'').toLowerCase() ? `<a class="btn" href="post.html?id=${p.id}">Edit</a>` : ''}
-          </div>
-        </li>
-      `).join('')
+      ? filtered.map(p => {
+          const { id, title, body, media, author, created } = p
+          const authorName = author?.name || ''
+          const isOwner = authorName.toLowerCase() === (me || '').toLowerCase()
+          return `
+            <li class="post-card">
+              <h3><a href="post.html?id=${id}">${escapeHtml(title || 'Untitled')}</a></h3>
+              ${imageTag(media)}
+              ${body ? `<p>${escapeHtml(body)}</p>` : ''}
+              <div style="display:flex;gap:.5rem;align-items:center;margin-top:.4rem">
+                <small>by <a href="profile.html?name=${encodeURIComponent(authorName)}">${authorName || 'unknown'}</a> • ${new Date(created).toLocaleString()}</small>
+                ${isOwner ? `<a class="btn" href="post.html?id=${id}">Edit</a>` : ''}
+              </div>
+            </li>
+          `
+        }).join('')
       : '<li>No posts match your search.</li>'
 
     msg.textContent = ''
