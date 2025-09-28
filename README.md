@@ -38,6 +38,9 @@ Along the way, I made use of:
 - AI tools (used for debugging help, quick explanations, and small fixes — similar to how youd use StackOverflow or documentation I guess).
 - Feedback from my girlfriend, who is a professional developer, especially on code readability and CSS structure.
 - Re-used css from my js1 resit after asking Mr Kruger's permission.
+## Project Board
+I used GitHub Projects to plan and track work:
+https://github.com/adring93/js2-course-assignment/projects
 
 These outside perspectives helped me understand the material better and apply it more confidently in my own code.
 
