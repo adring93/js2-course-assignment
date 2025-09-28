@@ -40,7 +40,7 @@ Along the way, I made use of:
 - Re-used css from my js1 resit after asking Mr Kruger's permission.
 ## Project Board
 I used GitHub Projects to plan and track work:
-https://github.com/adring93/js2-course-assignment/projects
+[https://github.com/adring93/js2-course-assignment/projects](https://github.com/users/adring93/projects/6)
 
 These outside perspectives helped me understand the material better and apply it more confidently in my own code.
 
