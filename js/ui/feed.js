@@ -15,7 +15,7 @@ const me = getProfileName()
 async function renderPosts(query = '') {
   msg.textContent = 'Loading...'
   try {
-    const res = await listPosts('') // fetch once
+    const res = await listPosts('') 
     const posts = res.data || []
     const q = (query || '').toLowerCase()
     const filtered = q

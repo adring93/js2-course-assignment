@@ -1,15 +1,18 @@
 import { getToken, getApiKey } from '../utils/storage.js'
 
 /**
- * JSON fetch with JWT + API-key headers and normalized errors.
- * @param {string} url
- * @param {RequestInit} [options]
- * @returns {Promise<any>}
+ * Make an HTTP request with authentication and API key headers.
+ * @param {string} url - The endpoint to call.
+ * @param {RequestInit} [options] - Fetch options (method, body, headers, etc).
+ * @returns {Promise<any>} The parsed JSON response.
+ * @throws {Error} If the response is not ok.
  */
 export async function http(url, options = {}) {
   const headers = new Headers(options.headers || {})
   headers.set('Accept', 'application/json')
-  if (options.body && !headers.has('Content-Type')) headers.set('Content-Type', 'application/json')
+  if (options.body && !headers.has('Content-Type')) {
+    headers.set('Content-Type', 'application/json')
+  }
 
   const token = getToken()
   if (token) headers.set('Authorization', `Bearer ${token}`)

@@ -67,42 +67,64 @@ function paint(editing){
     </div>
   `
 
-  if (editing) {
-    document.querySelector('#edit-form').onsubmit = async (e) => {
-      e.preventDefault()
-      try {
-        const title = document.querySelector('#title').value.trim()
-        const body = document.querySelector('#body').value.trim()
-        const mediaUrl = document.querySelector('#mediaUrl').value.trim()
-        const mediaAlt = document.querySelector('#mediaAlt').value.trim()
-        const payload = { title, body }
-        if (mediaUrl) payload.media = { url: mediaUrl, alt: mediaAlt || '' }
-        await updatePost(id, payload)
-        msg.textContent = '✅ Updated'
-        await init()
-      } catch (e) { msg.textContent = e.message }
+if (editing) {
+  document.querySelector('#edit-form').onsubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const title = document.querySelector('#title').value.trim()
+      const body = document.querySelector('#body').value.trim()
+      const mediaUrl = document.querySelector('#mediaUrl').value.trim()
+      const mediaAlt = document.querySelector('#mediaAlt').value.trim()
+
+      const payload = { title, body }
+
+      if (mediaUrl) {
+        payload.media = { url: mediaUrl, alt: mediaAlt || '' }
+      } else {
+        payload.media = null   
+      }
+
+      await updatePost(id, payload)
+      msg.textContent = '✅ Updated'
+      await init()
+    } catch (e) {
+      msg.textContent = e.message
     }
-    document.querySelector('#cancel-edit').onclick = () => paint(false)
+  }
+
+  document.querySelector('#cancel-edit').onclick = () => paint(false)
+  document.querySelector('#delete').onclick = onDelete
+} else {
+  if (state.isOwner) {
+    document.querySelector('#edit-btn').onclick = () => paint(true)
     document.querySelector('#delete').onclick = onDelete
   } else {
-    if (state.isOwner) {
-      document.querySelector('#edit-btn').onclick = () => paint(true)
-      document.querySelector('#delete').onclick = onDelete
-    } else {
-      document.querySelector('#follow').onclick = async (ev) => {
-        const btn = ev.currentTarget
-        try {
-          if (btn.textContent === 'Follow') { await followProfile(author); btn.textContent = 'Unfollow'; state.iFollow = true }
-          else { await unfollowProfile(author); btn.textContent = 'Follow'; state.iFollow = false }
-        } catch (e) { msg.textContent = e.message }
-      }
-      document.querySelector('#save-post').onclick = (ev) => {
-        state.saved = toggleSave(id, state.post)
-        ev.currentTarget.textContent = state.saved ? 'Saved ✓' : 'Save'
-      }
+    document.querySelector('#follow').onclick = async (ev) => {
+      const btn = ev.currentTarget
+      try {
+        if (btn.textContent === 'Follow') {
+          await followProfile(author)
+          btn.textContent = 'Unfollow'
+          state.iFollow = true
+        } else {
+          await unfollowProfile(author)
+          btn.textContent = 'Follow'
+          state.iFollow = false
+        }
+      } catch (e) { msg.textContent = e.message }
+    }
+    document.querySelector('#save-post').onclick = (ev) => {
+      state.saved = toggleSave(id, state.post)
+      ev.currentTarget.textContent = state.saved ? 'Saved ✓' : 'Save'
     }
   }
 }
+
+
+  document.querySelector('#cancel-edit').onclick = () => paint(false)
+  document.querySelector('#delete').onclick = onDelete
+}
+
 
 async function onDelete(){
   if (!confirm('Delete this post?')) return

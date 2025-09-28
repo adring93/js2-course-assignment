@@ -7,7 +7,6 @@ export async function registerUser(payload) {
 }
 
 /**
- * Login user, save token/name, and ensure API key exists.
  * @param {{email:string,password:string}} payload
  * @returns {Promise<any>}
  */
